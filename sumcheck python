@@ -1,0 +1,175 @@
+import math
+import random
+
+
+char = 7#Characteristic of the field.
+power = 1 #power of the characteristic
+order = math.pow(char,power)
+    
+    
+poly=[[0],[2,3,0,0],[1,1,0,1],[1,0,1,1]]
+dimension = 4
+
+def one_dimensional_polynomial(p:list, val:int):#This function univariate polynomial in a value
+
+    result = p[0]
+    for i in range (1, len(p)):
+        result = result+p[i]*math.pow(val, i)        
+
+    return(result)
+
+
+
+def evaluate_polynomial(p:list, val:list):#This function can also be done in a recursive way. But I think that it is clearer to do it directly.
+    #p is a list of lists. Every list describes a term. For example, if we have 3 variables, 4xyz^2 is expressed as [4,1,1,2] and 3xz = [3,1,0,1]
+    #The first of this terms is just a list with one number, the constant coefficient.
+
+    n = len(p)
+
+    result = p[0][0]    
+    
+    for t in range(1,len(p)):#Each t is a term
+
+        if len(val)+1 != len(p[t]):
+            raise ValueError("There is a dimension problem")
+            
+        term = 1
+        
+        for i in range (1,len(p[t])):#Each var is a variable in the term. In 4xyz^2, the number 4 "counts" as a variable.
+            #print(p[t][i])
+            if p[t][i] != 0:
+                term = term*math.pow(val[i-1],p[t][i])           
+
+        term = term*p[t][0]
+
+        result = result+term
+
+    return(result)
+
+
+def boolean_matrix(n):#This gives a matrix of n rows and 2^n columns with all the boolean possibilities
+    if n <= 0:
+        raise ValueError("n should be greater than 0")
+
+    num_rows = int(math.pow(2,n))
+    boolean_matrix = []
+
+    for i in range(num_rows):
+        boolean_row = []
+        for j in range(n):
+            bit = (i >> (n - j - 1)) & 1
+            boolean_row.append(bit)
+        boolean_matrix.append(boolean_row)
+
+    return boolean_matrix
+
+
+def sum_check_protocol(p:list, dim:int):
+
+    H = 0#the number H that has to be equalized
+    var = boolean_matrix(len(p)-1)
+
+    for i in range(0,int(math.pow(2,len(p)-1))):
+
+        H = H+evaluate_polynomial(p, var[i])      
+
+    if len(p) <2:
+        raise ValueError("The polynomial should have variables. Not only the independent coefficient")
+
+    #START OF THE PROTOCOL
+    print("Send me the value C1 that you claim that equals H defined in 4.1")
+    gh = int(input())
+    #FIRST STEP
+    g1 = []
+    randoms = []
+    
+    print("The dimension of the polynomial is "+str(dim))
+    print("Send me the first univariate polynomial g(X) = a_0+a_1 X+...+a_"+str(dim)+"+ X^"+str(dim)+". You should send me the "+str(dim+1)+" values a_0,...,a_"+str(dim))
+
+    polynomial = ""#The purpose of this variable is to let the prover know which polynomial has been chosen. It can be deleted.
+    
+    c1 = 0
+    
+    for i in range (0, dim+1):
+        g1.append(int(input()))
+        if i != 0 and g1[i] != 0:
+            
+            polynomial = polynomial+"+"+str(g1[i])+"X^"+str(i)
+            
+            c1 = c1+int(g1[i])
+
+    c1 = (2*g1[0]+c1)
+    #This is the result of summing g1(0)+g1(1)
+    polynomial = str(g1[0])+polynomial
+    
+    print("The polynomial you chose is "+polynomial)
+
+    if (H != c1):
+        print("You have been rejected")
+        return()
+
+    for r in range(1,len(poly[1])-1):#poly[1] is the number of variables+1 of the polynomial, it could be also poly[2], poly[3],...   
+
+        #ROUND r, 0<r<=n
+        
+        r1 = random.randint(0,char-1)
+        
+        r1=r+1#THIS IS DONE IN ORDER TO MATCH THE EXAMPLE OF THE BOOK. IT MUST BE DELETED!!
+        randoms.append(r1)
+        
+        print("The random element chosen is "+str(r1))
+
+        gh = one_dimensional_polynomial(g1, r1)
+
+        print("Send me another polynomial")
+
+        polynomial = ""
+        c1 = 0
+        g1=[]
+    
+        for i in range (0, dim+1):
+            
+            g1.append(int(input()))
+            if i != 0 and g1[i] != 0:
+            
+                polynomial = polynomial+"+"+str(g1[i])+"X^"+str(i)
+            
+                c1 = c1+g1[i]
+
+        c1 = (2*g1[0]+c1)
+        #This is the result of summing g1(0)+g1(1)
+        
+        polynomial = str(g1[0])+polynomial
+    
+        print("The polynomial you chose is "+polynomial)
+
+        if (gh != c1):
+            print("You have been rejected")
+            return()
+
+
+
+    #ROUND n
+
+    r1 = random.randint(0,char-1)
+    r1=6#THIS IS DONE IN ORDER TO MATCH THE EXAMPLE OF THE BOOK. IT MUST BE DELETED!!
+    randoms.append(r1)
+
+    gh = one_dimensional_polynomial(g1, r1)   
+
+    if (gh != evaluate_polynomial(p, randoms)):
+            print("You have been rejected")
+            return()
+    else:
+        print("Protocol accepted")
+    
+        
+sum_check_protocol(poly,dimension)       
+    
+
+    
+    
+
+
+            
+    
