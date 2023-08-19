@@ -1,14 +1,7 @@
 import math
 import random
 
-
-char = 7#Characteristic of the field.
-power = 1 #power of the characteristic
-order = math.pow(char,power)
-    
-    
-poly=[[0],[2,3,0,0],[1,1,0,1],[1,0,1,1]]
-dimension = 4
+from constants import char, poly, dimension
 
 def one_dimensional_polynomial(p:list, val:int):#This function univariate polynomial in a value
 
@@ -21,7 +14,7 @@ def one_dimensional_polynomial(p:list, val:int):#This function univariate polyno
 
 
 def evaluate_polynomial(p:list, val:list):#This function can also be done in a recursive way. But I think that it is clearer to do it directly.
-    #p is a list of lists. Every list describes a term. For example, if we have 3 variables, 4xyz^2 is expressed as [4,1,1,2] and 3xz = [3,1,0,1]
+    #p is a vector of vectors. Every list describes a term. For example, if we have 3 variables, 4xyz^2 is expressed as [4,1,1,2] and 3xz = [3,1,0,1]
     #The first of this terms is just a list with one number, the constant coefficient.
 
     n = len(p)
@@ -113,8 +106,6 @@ def sum_check_protocol(p:list, dim:int):
         #ROUND r, 0<r<=n
         
         r1 = random.randint(0,char-1)
-        
-        r1=r+1#THIS IS DONE IN ORDER TO MATCH THE EXAMPLE OF THE BOOK. IT MUST BE DELETED!!
         randoms.append(r1)
         
         print("The random element chosen is "+str(r1))
@@ -152,7 +143,6 @@ def sum_check_protocol(p:list, dim:int):
     #ROUND n
 
     r1 = random.randint(0,char-1)
-    r1=6#THIS IS DONE IN ORDER TO MATCH THE EXAMPLE OF THE BOOK. IT MUST BE DELETED!!
     randoms.append(r1)
 
     gh = one_dimensional_polynomial(g1, r1)   
