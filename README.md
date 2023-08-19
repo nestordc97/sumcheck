@@ -27,7 +27,7 @@ dimension: Maximal degree of each variable.
 Users can modify these constants to tailor the protocol to specific scenarios or field characteristics.
 
 Usage
-Clone the repository to your local machine using git clone https://github.com/yourusername/sumcheck-protocol.git.
+Clone the repository to your local machine using git clone https://github.com/nestordc97/sumcheck-protocol.git.
 Navigate to the repository directory using cd sumcheck-protocol.
 Explore and modify the scripts and constants as needed.
 Run the scripts using python sumcheck_protocol.py and python univariate_polynomial.py.
