@@ -10,21 +10,21 @@ File: univariate_polynomial.py
 Description: This script assists the prover in computing the univariate polynomial corresponding to each round of the Sumcheck Protocol. It plays a crucial role in the protocol's execution.
 Constants
 The constants.py file contains essential functions and constants that are configurable by the user.
-
-Functions
-boolean_matrix(n)
-
-Description: Generates a matrix of size n x 2^n with all possible boolean combinations. Used within the protocol computation.
-Usage: matrix = boolean_matrix(n)
-univariate_polynomial(coefficients, x)
-
-Description: Computes the value of the univariate polynomial with given coefficients at the specified value x.
-Usage: result = univariate_polynomial(coefficients, x)
-Constants
 char: Characteristic of the finite field.
 poly: Definition of the hidden polynomial in terms of coefficients and degrees of variables.
 dimension: Maximal degree of each variable.
 Users can modify these constants to tailor the protocol to specific scenarios or field characteristics.
+
+Functions
+boolean_matrix(n):
+Description: Generates a matrix of size n x 2^n with all possible boolean combinations. Used within the protocol computation.
+Usage: matrix = boolean_matrix(n)
+
+evaluate_polynomial(coefficients, x)
+Description: Computes the value of the univariate polynomial with given coefficients at the specified value x.
+Usage: result = evaluate_polynomial(coefficients, x)
+Constants
+
 
 Usage
 Clone the repository to your local machine using git clone https://github.com/nestordc97/sumcheck-protocol.git.
