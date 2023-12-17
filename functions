@@ -1,0 +1,53 @@
+import math
+
+import galois
+
+from constants2 import char, degree
+
+GF = galois.GF(char**degree)
+
+
+def boolean_matrix(n):#This gives a matrix of n rows and 2^n columns with all the boolean possibilities
+    if n <= 0:
+        raise ValueError("n should be greater than 0")
+
+    num_rows = int(math.pow(2,n))
+    boolean_matrix = []
+
+    for i in range(num_rows):
+        boolean_row = []
+        for j in range(n):
+            bit = (i >> (n - j - 1)) & 1
+            boolean_row.append(bit)
+        boolean_matrix.append(boolean_row)
+
+    return boolean_matrix
+
+def evaluate_polynomial(p:list, val:list):#This function can also be done in a recursive way. But I think that it is clearer to do it directly.
+    #p is a vector of vectors. Every list describes a term. For example, if we have 3 variables, 4xyz^2 is expressed as [4,1,1,2] and 3xz = [3,1,0,1]
+    #The first of this terms is just a list with one number, the constant coefficient.
+
+    n = len(p)
+
+    result = GF(p[0][0])    
+
+    for t in range(1,len(p)):#Each t is a term
+
+        if len(val)+1 != len(p[t]):
+            
+            raise ValueError("There is a dimension problem")
+            
+        term = GF(1)
+        
+        for i in range (1,len(p[t])):#Each var is a variable in the term. In 4xyz^2, the number 4 "counts" as a variable.
+
+            if p[t][i] != 0:
+                
+                term = term*GF(int(math.pow(val[i-1],p[t][i]))%(int(math.pow(char,degree))))
+
+        term = term*GF(p[t][0])
+        
+        result = result+term
+        
+
+    return(result)
