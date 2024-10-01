@@ -1,10 +1,10 @@
 Sumcheck Protocol Implementation
-This repository contains scripts for implementing the Sumcheck Protocol based on the description in Section 4.1 of the book "Proofs, Arguments, and Zero-Knowledge" by Justin Thaler. The protocol is adapted for finite fields with prime orders.
+This repository contains scripts for implementing the Sumcheck Protocol based on the description in Section 4.1 of the book "Proofs, Arguments, and Zero-Knowledge" by Justin Thaler.
 
 Scripts
 1. Sumcheck Protocol
 File: sumcheck_protocol.py
-Description: This script implements the Sumcheck Protocol, a fundamental concept in interactive proof systems. The protocol's computation is based on finite fields with prime orders. It follows the methodology described in Section 4.1 of the book.
+Description: This script implements the Sumcheck Protocol, a fundamental concept in interactive proof systems. It follows the methodology described in Section 4.1 of the book.
 2. Univariate Polynomial
 File: univariate_polynomial.py
 Description: This script assists the prover in computing the univariate polynomial corresponding to each round of the Sumcheck Protocol. It plays a crucial role in the protocol's execution.
