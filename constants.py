@@ -1,11 +1,14 @@
-import math
-
 import galois
 
-char = 97 #Characteristic of the field.
+# Field parameters
+CHAR = 97  # Characteristic of the field
+DEGREE = 2  # Degree of the field
+FIELD_SIZE = CHAR ** DEGREE  # Cache computed field size
 
-degree = 2 #Degree of the field
-poly=[[0],[2,3,0,0],[1,1,0,1],[1,0,1,1]] #This is the polynomial. Every vector is a monomial: The first value is the coefficient and the other values are the degree of each variable. For example, the monomial 3X_1(x_2)^3x_3 is represented by (3,1,3,1). 
-#The elements of the field have to be expressed as integers from 0 to char^degree-1
+# Polynomial definition: each monomial as [coefficient, deg_var1, deg_var2, ...]
+# Example: 3X₁(X₂)³X₃ is represented as [3, 1, 3, 1]
+POLY = [[0], [2, 3, 0, 0], [1, 1, 0, 1], [1, 0, 1, 1]]
+DIMENSION = 3  # Maximal degree of each variable
 
-dimension = 3 #maximal degree of each variable
+# Precompute field
+GF = galois.GF(FIELD_SIZE)
